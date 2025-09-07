@@ -1,53 +1,56 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { MoodEmoji } from '@/assets/DoodleIllustration';
 import { Search, Calendar, Download, BarChart3, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
 
-// Mock data - in real app this would come from API
-const mockEntries = [
-  {
-    id: 1,
-    createdAt: new Date('2024-01-15T10:30:00'),
-    mood: 'Happy',
-    notes: 'Had a wonderful morning walk in the park. The fresh air really helped clear my mind and I felt so grateful for the beautiful weather.'
-  },
-  {
-    id: 2,
-    createdAt: new Date('2024-01-14T15:45:00'),
-    mood: 'Stressed',
-    notes: 'Work was really overwhelming today. Had three deadlines and felt like I was drowning. Need to remember to take breaks and breathe.'
-  },
-  {
-    id: 3,
-    createdAt: new Date('2024-01-13T20:15:00'),
-    mood: 'Grateful',
-    notes: 'Spent quality time with family today. We cooked dinner together and shared so many laughs. These moments are precious.'
-  },
-  {
-    id: 4,
-    createdAt: new Date('2024-01-12T09:00:00'),
-    mood: 'Excited',
-    notes: 'Starting a new project at work today! Feeling energized and ready to tackle new challenges. Love learning new things.'
-  },
-  {
-    id: 5,
-    createdAt: new Date('2024-01-11T18:30:00'),
-    mood: 'Calm',
-    notes: 'Meditation session was really peaceful today. 20 minutes of quiet time made such a difference in my mindset.'
-  }
-];
+interface Entry {
+  id: string;
+  created_at: string;
+  mood: string;
+  notes: string;
+}
 
 const Journal = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [entries] = useState(mockEntries);
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    fetchEntries();
+  }, []);
+
+  const fetchEntries = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('entries')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        toast.error('Failed to load entries');
+        console.error('Error fetching entries:', error);
+      } else {
+        setEntries(data || []);
+      }
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const filteredEntries = entries.filter(entry =>
     entry.mood.toLowerCase().includes(searchTerm.toLowerCase()) ||
     entry.notes.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    format(entry.createdAt, 'PPP').toLowerCase().includes(searchTerm.toLowerCase())
+    format(new Date(entry.created_at), 'PPP').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleExportPDF = () => {
@@ -70,6 +73,19 @@ const Journal = () => {
     };
     return moodColors[mood] || 'mood-happy';
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center py-12">
+          <div className="text-6xl mb-4">✨</div>
+          <h3 className="text-2xl font-handwriting text-primary mb-2">
+            Loading your journal...
+          </h3>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -160,7 +176,7 @@ const Journal = () => {
                           Feeling {entry.mood}
                         </h3>
                         <p className="text-sm text-muted-foreground font-handwriting">
-                          {format(entry.createdAt, 'EEEE, MMMM do, yyyy')} at {format(entry.createdAt, 'h:mm a')}
+                          {format(new Date(entry.created_at), 'EEEE, MMMM do, yyyy')} at {format(new Date(entry.created_at), 'h:mm a')}
                         </p>
                       </div>
                     </div>

@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MoodEmoji } from '@/assets/DoodleIllustration';
 import { PenTool, Save, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
 const moods = [
   'Happy', 'Sad', 'Excited', 'Angry', 'Stressed', 'Calm', 
@@ -16,6 +18,7 @@ const AddEntry = () => {
   const [selectedMood, setSelectedMood] = useState<string>('');
   const [notes, setNotes] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,17 +30,38 @@ const AddEntry = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      toast.success('✨ Your mood has been saved!', {
-        description: 'Your entry has been added to your journal'
-      });
-      
-      // Reset form
-      setSelectedMood('');
-      setNotes('');
+    try {
+      if (!user) {
+        toast.error('You must be logged in to save entries');
+        return;
+      }
+
+      const { error } = await supabase
+        .from('entries')
+        .insert([{ 
+          mood: selectedMood, 
+          notes: notes || '',
+          user_id: user.id
+        }]);
+
+      if (error) {
+        toast.error('Failed to save entry. Please try again.');
+        console.error('Error saving entry:', error);
+      } else {
+        toast.success('✨ Your mood has been saved!', {
+          description: 'Your entry has been added to your journal'
+        });
+        
+        // Reset form
+        setSelectedMood('');
+        setNotes('');
+      }
+    } catch (error) {
+      toast.error('Something went wrong. Please try again.');
+      console.error('Error:', error);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (

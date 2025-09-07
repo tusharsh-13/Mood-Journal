@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Heart, PlusCircle, BookOpen, Home } from 'lucide-react';
+import { Heart, PlusCircle, BookOpen, Home, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,6 +10,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
+  const { signOut, user } = useAuth();
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
@@ -16,6 +19,10 @@ const Layout = ({ children }: LayoutProps) => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-yellow via-mint to-baby-pink">
@@ -30,22 +37,39 @@ const Layout = ({ children }: LayoutProps) => {
               </h1>
             </Link>
             
-            <nav className="flex gap-1">
-              {navItems.map(({ path, label, icon: Icon }) => (
-                <Link
-                  key={path}
-                  to={path}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full font-handwriting text-lg transition-all duration-200 ${
-                    isActive(path)
-                      ? 'bg-primary text-primary-foreground shadow-md'
-                      : 'text-primary hover:bg-primary/10'
-                  }`}
+            <div className="flex items-center gap-4">
+              <nav className="flex gap-1">
+                {navItems.map(({ path, label, icon: Icon }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full font-handwriting text-lg transition-all duration-200 ${
+                      isActive(path)
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-primary hover:bg-primary/10'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    {label}
+                  </Link>
+                ))}
+              </nav>
+              
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-muted-foreground font-handwriting">
+                  {user?.email?.split('@')[0]}
+                </span>
+                <Button
+                  onClick={handleSignOut}
+                  variant="ghost"
+                  size="sm"
+                  className="font-handwriting text-muted-foreground hover:text-primary"
                 >
-                  <Icon className="w-5 h-5" />
-                  {label}
-                </Link>
-              ))}
-            </nav>
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Sign Out
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </header>

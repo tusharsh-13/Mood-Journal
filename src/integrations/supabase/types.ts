@@ -47,7 +47,6 @@ export type Database = {
         Row: {
           count: number | null
           mood: string | null
-          user_id: string | null
         }
         Relationships: []
       }
