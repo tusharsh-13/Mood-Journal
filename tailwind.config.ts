@@ -47,6 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Mood Journal Pastel Colors
+        "soft-yellow": "hsl(var(--soft-yellow))",
+        "mint": "hsl(var(--mint))",
+        "baby-pink": "hsl(var(--baby-pink))",
+        "lavender": "hsl(var(--lavender))",
+        "sky-blue": "hsl(var(--sky-blue))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +63,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        'handwriting': ['Patrick Hand', 'Indie Flower', 'cursive'],
+        'body': ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

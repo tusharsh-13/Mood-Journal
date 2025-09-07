@@ -1,42 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand:wght@400&family=Inter:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Mood Journal Design System - Pastel Doodle Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Pastel Color Palette */
+    --background: 46 100% 96%; /* Soft Yellow base */
+    --foreground: 240 15% 20%;
+
+    /* Mood Journal Pastel Colors */
+    --soft-yellow: 46 100% 88%; /* #FFF9C4 */
+    --mint: 130 60% 88%; /* #C8F7DC */
+    --baby-pink: 345 100% 91%; /* #FFD6DE */
+    --lavender: 270 100% 91%; /* #E7D6FF */
+    --sky-blue: 195 100% 91%; /* #D9F1FF */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 240 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 240 15% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 270 50% 65%; /* Lavender primary */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 130 40% 85%; /* Mint secondary */
+    --secondary-foreground: 240 15% 20%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 46 70% 92%;
+    --muted-foreground: 240 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 345 80% 88%; /* Baby pink accent */
+    --accent-foreground: 240 15% 20%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 240 15% 85%;
+    --input: 0 0% 100%;
+    --ring: 270 50% 65%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Custom mood journal tokens */
+    --journal-shadow: 0 4px 12px -2px hsl(240 15% 20% / 0.1);
+    --doodle-shadow: 0 2px 8px -1px hsl(270 50% 65% / 0.2);
+    --card-hover: 0 8px 24px -4px hsl(240 15% 20% / 0.15);
+    
+    /* Gradients */
+    --gradient-pastel: linear-gradient(135deg, hsl(var(--soft-yellow)), hsl(var(--mint)));
+    --gradient-mood: linear-gradient(135deg, hsl(var(--lavender)), hsl(var(--sky-blue)));
+    
+    /* Fonts */
+    --font-handwriting: 'Patrick Hand', 'Indie Flower', cursive;
+    --font-body: 'Inter', system-ui, sans-serif;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +121,67 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body;
+    font-family: var(--font-body);
+  }
+
+  /* Custom handwriting font utility */
+  .font-handwriting {
+    font-family: var(--font-handwriting);
+  }
+}
+
+@layer components {
+  /* Doodle Card Component */
+  .doodle-card {
+    @apply bg-card rounded-2xl border-2 border-border/50 p-6;
+    box-shadow: var(--journal-shadow);
+    position: relative;
+  }
+
+  .doodle-card:hover {
+    box-shadow: var(--card-hover);
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+  }
+
+  /* Hand-drawn paper lines effect */
+  .paper-lines {
+    background-image: 
+      repeating-linear-gradient(
+        transparent,
+        transparent 24px,
+        hsl(var(--border)) 24px,
+        hsl(var(--border)) 26px
+      );
+    background-attachment: local;
+  }
+
+  /* Doodle button with pen icon style */
+  .doodle-button {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-handwriting text-lg;
+    box-shadow: var(--doodle-shadow);
+    transform: rotate(-1deg);
+    transition: all 0.2s ease;
+  }
+
+  .doodle-button:hover {
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: var(--card-hover);
+  }
+
+  /* Mood badge styles */
+  .mood-happy { @apply bg-soft-yellow text-foreground; }
+  .mood-sad { @apply bg-sky-blue text-foreground; }
+  .mood-excited { @apply bg-baby-pink text-foreground; }
+  .mood-calm { @apply bg-mint text-foreground; }
+  .mood-stressed { @apply bg-lavender text-foreground; }
+  .mood-angry { @apply bg-destructive/20 text-destructive; }
+
+  /* Squiggly divider */
+  .squiggly-divider {
+    height: 8px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0,4 Q25,0 50,4 T100,4' stroke='hsl(270 50%25 65%25)' stroke-width='2' fill='none'/%3E%3C/svg%3E") repeat-x;
+    background-size: 100px 8px;
   }
 }
