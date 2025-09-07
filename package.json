@@ -82,3 +82,7 @@
     "vite": "^5.4.19"
   }
 }
+"dependencies": {
+  "date-fns": "^3.6.0",
+  "react-day-picker": "^8.10.1"
+}
