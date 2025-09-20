@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-import { Heart, LogIn, UserPlus } from 'lucide-react';
+import { Activity, LogIn, UserPlus, Lock, Mail } from 'lucide-react';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -43,45 +43,45 @@ const Auth = () => {
         }
       } else {
         if (isLogin) {
-          toast.success('Welcome back! 💜');
+          toast.success('Access granted');
           navigate('/');
         } else {
-          toast.success('Account created! Please check your email to confirm your account.');
+          toast.success('Account created. Please check your email to confirm your account.');
         }
       }
     } catch (error) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error('Authentication failed. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-soft-yellow/20 via-mint/20 to-baby-pink/20 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="max-w-md w-full space-y-8">
         {/* Header */}
-        <div className="text-center">
-          <Heart className="w-16 h-16 text-baby-pink mx-auto mb-4" />
-          <h1 className="text-4xl font-handwriting text-primary mb-2">
-            Welcome to Your Mood Journal
+        <div className="text-center space-y-4">
+          <Activity className="w-12 h-12 text-primary mx-auto" />
+          <h1 className="text-3xl font-bold text-foreground">
+            MoodMetrics
           </h1>
-          <p className="text-muted-foreground font-handwriting">
-            {isLogin ? 'Sign in to continue your journey' : 'Create your account to start journaling'}
+          <p className="text-muted-foreground">
+            {isLogin ? 'Access your analytics dashboard' : 'Create your tracking account'}
           </p>
         </div>
 
         {/* Auth Form */}
-        <Card className="doodle-card bg-white/80 backdrop-blur-sm">
+        <Card className="modern-card">
           <CardHeader>
-            <CardTitle className="text-center font-handwriting text-2xl text-primary flex items-center justify-center gap-2">
+            <CardTitle className="text-center text-xl flex items-center justify-center gap-2">
               {isLogin ? (
                 <>
-                  <LogIn className="w-6 h-6" />
+                  <LogIn className="w-5 h-5" />
                   Sign In
                 </>
               ) : (
                 <>
-                  <UserPlus className="w-6 h-6" />
+                  <UserPlus className="w-5 h-5" />
                   Create Account
                 </>
               )}
@@ -90,54 +90,60 @@ const Auth = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-handwriting text-lg">
+                <Label htmlFor="email" className="text-sm font-medium">
                   Email Address
                 </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className="h-12 border-2 border-primary/30 font-handwriting text-lg"
-                  required
-                />
+                <div className="relative">
+                  <Mail className="w-4 h-4 absolute left-3 top-3 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="pl-10 bg-input border border-border"
+                    required
+                  />
+                </div>
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="password" className="font-handwriting text-lg">
+                <Label htmlFor="password" className="text-sm font-medium">
                   Password
                 </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  className="h-12 border-2 border-primary/30 font-handwriting text-lg"
-                  required
-                />
+                <div className="relative">
+                  <Lock className="w-4 h-4 absolute left-3 top-3 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="pl-10 bg-input border border-border"
+                    required
+                  />
+                </div>
               </div>
 
               <Button
                 type="submit"
                 disabled={loading}
-                className="doodle-button w-full h-12 bg-baby-pink hover:bg-baby-pink/80 text-foreground border-2 border-primary/30 text-lg"
+                className="modern-button w-full"
               >
-                {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
+                {loading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
               </Button>
             </form>
 
             {/* Toggle between login/signup */}
             <div className="mt-6 text-center">
-              <p className="text-muted-foreground font-handwriting">
-                {isLogin ? "Don't have an account?" : "Already have an account?"}
+              <p className="text-muted-foreground text-sm">
+                {isLogin ? "Need an account?" : "Already have an account?"}
               </p>
               <Button
                 type="button"
                 variant="ghost"
                 onClick={() => setIsLogin(!isLogin)}
-                className="font-handwriting text-primary hover:text-primary/80"
+                className="text-primary hover:text-primary/80 text-sm"
               >
                 {isLogin ? 'Create one here' : 'Sign in instead'}
               </Button>
@@ -145,10 +151,10 @@ const Auth = () => {
           </CardContent>
         </Card>
 
-        {/* Helpful info */}
-        <div className="text-center text-sm text-muted-foreground font-handwriting space-y-1">
-          <p>🔒 Your data is secure and private</p>
-          <p>✨ Start tracking your moods today</p>
+        {/* Security Info */}
+        <div className="text-center text-xs text-muted-foreground space-y-1 font-mono">
+          <p>🔒 End-to-end encrypted</p>
+          <p>📊 Analytics-ready data</p>
         </div>
       </div>
     </div>

@@ -1,63 +1,69 @@
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand:wght@400&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Mood Journal Design System - Pastel Doodle Theme */
+/* Mood Tracker Design System - Modern Dark Theme */
 
 @layer base {
   :root {
-    /* Pastel Color Palette */
-    --background: 46 100% 96%; /* Soft Yellow base */
-    --foreground: 240 15% 20%;
+    /* Modern Dark Color Palette */
+    --background: 222 47% 11%; /* Dark slate background */
+    --foreground: 213 31% 91%; /* Light gray text */
 
-    /* Mood Journal Pastel Colors */
-    --soft-yellow: 46 100% 88%; /* #FFF9C4 */
-    --mint: 130 60% 88%; /* #C8F7DC */
-    --baby-pink: 345 100% 91%; /* #FFD6DE */
-    --lavender: 270 100% 91%; /* #E7D6FF */
-    --sky-blue: 195 100% 91%; /* #D9F1FF */
+    /* Professional Color System */
+    --slate-50: 210 40% 98%;
+    --slate-100: 210 40% 96%;
+    --slate-200: 214 32% 91%;
+    --slate-300: 213 27% 84%;
+    --slate-400: 215 20% 65%;
+    --slate-500: 215 16% 47%;
+    --slate-600: 215 19% 35%;
+    --slate-700: 215 25% 27%;
+    --slate-800: 217 33% 17%;
+    --slate-900: 222 47% 11%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 15% 20%;
+    --card: 217 33% 17%; /* Dark card background */
+    --card-foreground: 213 31% 91%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 15% 20%;
+    --popover: 217 33% 17%;
+    --popover-foreground: 213 31% 91%;
 
-    --primary: 270 50% 65%; /* Lavender primary */
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 76% 36%; /* Professional green */
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 130 40% 85%; /* Mint secondary */
-    --secondary-foreground: 240 15% 20%;
+    --secondary: 215 25% 27%; /* Dark slate secondary */
+    --secondary-foreground: 213 31% 91%;
 
-    --muted: 46 70% 92%;
-    --muted-foreground: 240 10% 45%;
+    --muted: 215 25% 27%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 345 80% 88%; /* Baby pink accent */
-    --accent-foreground: 240 15% 20%;
+    --accent: 217 91% 60%; /* Blue accent */
+    --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 240 15% 85%;
-    --input: 0 0% 100%;
-    --ring: 270 50% 65%;
+    --border: 215 25% 27%;
+    --input: 215 25% 27%;
+    --ring: 142 76% 36%;
 
-    --radius: 1rem;
+    --radius: 0.5rem;
 
-    /* Custom mood journal tokens */
-    --journal-shadow: 0 4px 12px -2px hsl(240 15% 20% / 0.1);
-    --doodle-shadow: 0 2px 8px -1px hsl(270 50% 65% / 0.2);
-    --card-hover: 0 8px 24px -4px hsl(240 15% 20% / 0.15);
+    /* Modern shadow system */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
     
     /* Gradients */
-    --gradient-pastel: linear-gradient(135deg, hsl(var(--soft-yellow)), hsl(var(--mint)));
-    --gradient-mood: linear-gradient(135deg, hsl(var(--lavender)), hsl(var(--sky-blue)));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(142 76% 46%));
+    --gradient-dark: linear-gradient(135deg, hsl(var(--slate-800)), hsl(var(--slate-700)));
     
-    /* Fonts */
-    --font-handwriting: 'Patrick Hand', 'Indie Flower', cursive;
-    --font-body: 'Inter', system-ui, sans-serif;
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: 'Space Grotesk', system-ui, sans-serif;
 
     --sidebar-background: 0 0% 98%;
 
@@ -76,42 +82,35 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+  .light {
+    /* Light mode (optional alternative) */
+    --background: 0 0% 100%;
+    --foreground: 222 84% 4.9%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 84% 4.9%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 84% 4.9%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 210 40% 98%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 84% 4.9%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 84% 4.9%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 142 76% 36%;
   }
 }
 
@@ -121,67 +120,88 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body;
-    font-family: var(--font-body);
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
   }
 
-  /* Custom handwriting font utility */
-  .font-handwriting {
-    font-family: var(--font-handwriting);
+  /* Typography utilities */
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  
+  .font-sans {
+    font-family: var(--font-sans);
   }
 }
 
 @layer components {
-  /* Doodle Card Component */
-  .doodle-card {
-    @apply bg-card rounded-2xl border-2 border-border/50 p-6;
-    box-shadow: var(--journal-shadow);
+  /* Modern Card Component */
+  .modern-card {
+    @apply bg-card rounded-lg border border-border p-6;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .modern-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+    border-color: hsl(var(--ring));
+  }
+
+  /* Tech-inspired grid pattern */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+  }
+
+  /* Modern button */
+  .modern-button {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium text-sm;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .modern-button:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  /* Mood badge styles - modern color system */
+  .mood-happy { @apply bg-emerald-500/20 text-emerald-400 border border-emerald-500/30; }
+  .mood-sad { @apply bg-blue-500/20 text-blue-400 border border-blue-500/30; }
+  .mood-excited { @apply bg-orange-500/20 text-orange-400 border border-orange-500/30; }
+  .mood-calm { @apply bg-teal-500/20 text-teal-400 border border-teal-500/30; }
+  .mood-stressed { @apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30; }
+  .mood-angry { @apply bg-red-500/20 text-red-400 border border-red-500/30; }
+
+  /* Geometric divider */
+  .geometric-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
     position: relative;
   }
 
-  .doodle-card:hover {
-    box-shadow: var(--card-hover);
-    transform: translateY(-2px);
-    transition: all 0.3s ease;
-  }
-
-  /* Hand-drawn paper lines effect */
-  .paper-lines {
-    background-image: 
-      repeating-linear-gradient(
-        transparent,
-        transparent 24px,
-        hsl(var(--border)) 24px,
-        hsl(var(--border)) 26px
-      );
-    background-attachment: local;
-  }
-
-  /* Doodle button with pen icon style */
-  .doodle-button {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-handwriting text-lg;
-    box-shadow: var(--doodle-shadow);
-    transform: rotate(-1deg);
-    transition: all 0.2s ease;
-  }
-
-  .doodle-button:hover {
-    transform: rotate(0deg) scale(1.05);
-    box-shadow: var(--card-hover);
-  }
-
-  /* Mood badge styles */
-  .mood-happy { @apply bg-soft-yellow text-foreground; }
-  .mood-sad { @apply bg-sky-blue text-foreground; }
-  .mood-excited { @apply bg-baby-pink text-foreground; }
-  .mood-calm { @apply bg-mint text-foreground; }
-  .mood-stressed { @apply bg-lavender text-foreground; }
-  .mood-angry { @apply bg-destructive/20 text-destructive; }
-
-  /* Squiggly divider */
-  .squiggly-divider {
+  .geometric-divider::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
     height: 8px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8'%3E%3Cpath d='M0,4 Q25,0 50,4 T100,4' stroke='hsl(270 50%25 65%25)' stroke-width='2' fill='none'/%3E%3C/svg%3E") repeat-x;
-    background-size: 100px 8px;
+    background: hsl(var(--primary));
+    border-radius: 1px;
   }
+
+  /* Status indicators */
+  .status-indicator {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-online { @apply bg-emerald-500/20 text-emerald-400; }
+  .status-offline { @apply bg-slate-500/20 text-slate-400; }
 }

@@ -1,124 +1,143 @@
 import { WelcomeDoodle, QuoteBubble } from '@/assets/DoodleIllustration';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { PlusCircle, BookOpen, Sparkles } from 'lucide-react';
+import { Plus, BarChart3, Target, TrendingUp, Activity, Database } from 'lucide-react';
 
-const dailyQuotes = [
-  "Every day is a fresh start, embrace it with an open heart 🌸",
-  "Your feelings are valid, honor them with kindness 💕",
-  "Small steps forward are still progress 🌿",
-  "Take a deep breath, you're doing better than you think ✨",
-  "Today is a good day to check in with yourself 🦋",
-  "Your mental health matters, treat it with care 🌺",
-  "It's okay to feel whatever you're feeling right now 🌙"
+const insights = [
+  "Consistent tracking leads to better self-awareness",
+  "Your patterns reveal more than individual moments", 
+  "Small changes can create significant improvements",
+  "Data-driven insights help optimize your well-being",
+  "Regular check-ins build emotional intelligence",
+  "Understanding triggers helps manage responses",
+  "Progress tracking motivates continued growth"
 ];
 
 const Home = () => {
-  const todaysQuote = dailyQuotes[new Date().getDay()];
+  const todaysInsight = insights[new Date().getDay()];
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Welcome Section */}
-      <div className="text-center mb-12">
-        <h1 className="text-5xl font-handwriting text-primary mb-4 flex items-center justify-center gap-3">
-          <Sparkles className="w-12 h-12 text-baby-pink" />
-          Welcome to Your Mood Journal
-          <Sparkles className="w-12 h-12 text-mint" />
+    <div className="max-w-6xl mx-auto space-y-8">
+      {/* Hero Section */}
+      <div className="text-center space-y-6">
+        <h1 className="text-4xl font-bold text-foreground flex items-center justify-center gap-3">
+          <Activity className="w-10 h-10 text-primary" />
+          Mood Analytics Dashboard
         </h1>
-        <p className="text-xl text-muted-foreground font-handwriting">
-          A safe space to track your emotions and nurture your well-being
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Track, analyze, and optimize your emotional patterns with data-driven insights
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8 items-start">
+      <div className="grid lg:grid-cols-3 gap-8">
         {/* Left Column - Illustration */}
-        <div className="doodle-card bg-gradient-to-br from-soft-yellow/30 to-mint/30">
-          <WelcomeDoodle />
+        <div className="lg:col-span-2">
+          <Card className="modern-card h-full">
+            <CardContent className="p-8">
+              <WelcomeDoodle />
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Right Column - Actions & Quote */}
+        {/* Right Column - Actions */}
         <div className="space-y-6">
-          {/* Today's Quote */}
-          <QuoteBubble>
-            <h3 className="text-lg font-handwriting text-primary mb-3 flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
-              Today's Inspiration
-            </h3>
-            <p className="text-foreground font-handwriting text-lg leading-relaxed">
-              {todaysQuote}
-            </p>
-          </QuoteBubble>
+          {/* Today's Insight */}
+          <Card className="modern-card">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Target className="w-5 h-5 text-primary" />
+                Daily Insight
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-foreground leading-relaxed">
+                {todaysInsight}
+              </p>
+            </CardContent>
+          </Card>
 
-          {/* Action Buttons */}
-          <div className="space-y-4">
-            <Link to="/add" className="block">
-              <Button className="doodle-button w-full bg-baby-pink hover:bg-baby-pink/80 text-foreground border-2 border-primary/30">
-                <PlusCircle className="w-6 h-6 mr-3" />
-                How are you feeling today?
+          {/* Quick Actions */}
+          <div className="space-y-3">
+            <Link to="/add">
+              <Button className="modern-button w-full justify-start text-left">
+                <Plus className="w-5 h-5 mr-3" />
+                Record Current Mood
               </Button>
             </Link>
 
-            <Link to="/journal" className="block">
-              <Button className="doodle-button w-full bg-lavender hover:bg-lavender/80 text-foreground border-2 border-primary/30">
-                <BookOpen className="w-6 h-6 mr-3" />
-                Read your journal entries
+            <Link to="/journal">
+              <Button variant="outline" className="w-full justify-start">
+                <BarChart3 className="w-5 h-5 mr-3" />
+                View Analytics
               </Button>
             </Link>
           </div>
 
           {/* Stats Preview */}
-          <div className="doodle-card bg-gradient-to-br from-sky-blue/30 to-lavender/30">
-            <h3 className="text-lg font-handwriting text-primary mb-3">
-              Your Journey So Far
-            </h3>
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-handwriting text-primary">0</p>
-                <p className="text-sm text-muted-foreground">Total Entries</p>
+          <Card className="modern-card">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-primary" />
+                Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-primary">0</p>
+                  <p className="text-sm text-muted-foreground">Total Entries</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-2xl font-bold text-primary">0</p>
+                  <p className="text-sm text-muted-foreground">Days Tracked</p>
+                </div>
               </div>
-              <div>
-                <p className="text-2xl font-handwriting text-primary">0</p>
-                <p className="text-sm text-muted-foreground">Days Tracked</p>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground mt-4 font-handwriting text-center">
-              Start adding entries to see your progress! 
-            </p>
-          </div>
+              <p className="text-sm text-muted-foreground mt-4 text-center">
+                Start recording to see your patterns
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
-      {/* Feature Cards */}
-      <div className="grid md:grid-cols-3 gap-6 mt-12">
-        <div className="doodle-card bg-gradient-to-br from-mint/20 to-soft-yellow/20 text-center">
-          <div className="w-12 h-12 bg-mint rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">📝</span>
-          </div>
-          <h4 className="font-handwriting text-lg text-primary mb-2">Track Daily</h4>
-          <p className="text-sm text-muted-foreground">
-            Record your mood and thoughts every day to build healthy habits
-          </p>
-        </div>
+      {/* Feature Grid */}
+      <div className="grid md:grid-cols-3 gap-6">
+        <Card className="modern-card text-center">
+          <CardContent className="p-6">
+            <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Database className="w-6 h-6 text-primary" />
+            </div>
+            <h4 className="font-semibold text-lg mb-2">Data Collection</h4>
+            <p className="text-sm text-muted-foreground">
+              Systematic mood tracking with contextual notes and timestamps
+            </p>
+          </CardContent>
+        </Card>
 
-        <div className="doodle-card bg-gradient-to-br from-baby-pink/20 to-lavender/20 text-center">
-          <div className="w-12 h-12 bg-baby-pink rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">📊</span>
-          </div>
-          <h4 className="font-handwriting text-lg text-primary mb-2">See Patterns</h4>
-          <p className="text-sm text-muted-foreground">
-            Visualize your emotional journey with beautiful charts and insights
-          </p>
-        </div>
+        <Card className="modern-card text-center">
+          <CardContent className="p-6">
+            <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <TrendingUp className="w-6 h-6 text-accent" />
+            </div>
+            <h4 className="font-semibold text-lg mb-2">Pattern Analysis</h4>
+            <p className="text-sm text-muted-foreground">
+              Identify trends, triggers, and correlations in your emotional data
+            </p>
+          </CardContent>
+        </Card>
 
-        <div className="doodle-card bg-gradient-to-br from-sky-blue/20 to-mint/20 text-center">
-          <div className="w-12 h-12 bg-sky-blue rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">💙</span>
-          </div>
-          <h4 className="font-handwriting text-lg text-primary mb-2">Self Care</h4>
-          <p className="text-sm text-muted-foreground">
-            Develop mindful awareness and practice self-compassion
-          </p>
-        </div>
+        <Card className="modern-card text-center">
+          <CardContent className="p-6">
+            <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+              <Target className="w-6 h-6 text-emerald-500" />
+            </div>
+            <h4 className="font-semibold text-lg mb-2">Optimization</h4>
+            <p className="text-sm text-muted-foreground">
+              Use insights to make informed decisions about your well-being
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
