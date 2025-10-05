@@ -8,6 +8,9 @@ import { format } from 'date-fns';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
+import { StatsDialog } from '@/components/StatsDialog';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Entry {
   id: string;
@@ -20,6 +23,7 @@ const Journal = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [entries, setEntries] = useState<Entry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [statsOpen, setStatsOpen] = useState(false);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -53,9 +57,47 @@ const Journal = () => {
     format(new Date(entry.created_at), 'PPP').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleExportPDF = () => {
-    // In real app, this would use html2canvas + jsPDF
-    alert('PDF export feature coming soon! 📄✨');
+  const handleExportPDF = async () => {
+    try {
+      toast.info('Generating PDF...');
+      
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      let yPosition = 20;
+
+      // Add title
+      pdf.setFontSize(20);
+      pdf.text('Mood Journal Export', pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 10;
+
+      pdf.setFontSize(12);
+      pdf.text(`Generated on ${format(new Date(), 'PPP')}`, pageWidth / 2, yPosition, { align: 'center' });
+      yPosition += 15;
+
+      // Add entries
+      filteredEntries.forEach((entry, index) => {
+        if (yPosition > pageHeight - 40) {
+          pdf.addPage();
+          yPosition = 20;
+        }
+
+        pdf.setFontSize(14);
+        pdf.text(`${format(new Date(entry.created_at), 'PPP')} - ${entry.mood}`, 20, yPosition);
+        yPosition += 8;
+
+        pdf.setFontSize(10);
+        const splitNotes = pdf.splitTextToSize(entry.notes, pageWidth - 40);
+        pdf.text(splitNotes, 20, yPosition);
+        yPosition += (splitNotes.length * 5) + 10;
+      });
+
+      pdf.save(`mood-journal-${format(new Date(), 'yyyy-MM-dd')}.pdf`);
+      toast.success('PDF exported successfully!');
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+      toast.error('Failed to export PDF');
+    }
   };
 
   const getMoodColor = (mood: string) => {
@@ -121,7 +163,10 @@ const Journal = () => {
             Export PDF
           </Button>
           
-          <Button className="doodle-button bg-sky-blue hover:bg-sky-blue/80 text-foreground border-2 border-primary/30">
+          <Button 
+            onClick={() => setStatsOpen(true)}
+            className="doodle-button bg-sky-blue hover:bg-sky-blue/80 text-foreground border-2 border-primary/30"
+          >
             <BarChart3 className="w-5 h-5 mr-2" />
             View Stats
           </Button>
@@ -219,6 +264,13 @@ const Journal = () => {
           </p>
         </div>
       )}
+
+      {/* Stats Dialog */}
+      <StatsDialog 
+        open={statsOpen}
+        onOpenChange={setStatsOpen}
+        entries={entries}
+      />
     </div>
   );
 };
