@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MoodEmoji } from '@/assets/DoodleIllustration';
-import { Activity, Save, TrendingUp, Target } from 'lucide-react';
+import { PenTool, Save, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
@@ -24,7 +24,7 @@ const AddEntry = () => {
     e.preventDefault();
     
     if (!selectedMood) {
-      toast.error('Please select a mood first');
+      toast.error('Please select a mood first! 💭');
       return;
     }
 
@@ -48,8 +48,8 @@ const AddEntry = () => {
         toast.error('Failed to save entry. Please try again.');
         console.error('Error saving entry:', error);
       } else {
-        toast.success('Entry saved successfully', {
-          description: 'Your mood data has been recorded'
+        toast.success('✨ Your mood has been saved!', {
+          description: 'Your entry has been added to your journal'
         });
         
         // Reset form
@@ -65,34 +65,34 @@ const AddEntry = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold text-foreground flex items-center justify-center gap-3">
-          <Activity className="w-8 h-8 text-primary" />
-          Mood Check-in
+    <div className="max-w-2xl mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-handwriting text-primary mb-4 flex items-center justify-center gap-3">
+          <PenTool className="w-10 h-10 text-baby-pink" />
+          How are you feeling today?
         </h1>
-        <p className="text-lg text-muted-foreground">
-          Track your emotional state and add context to your day
+        <p className="text-lg text-muted-foreground font-handwriting">
+          Take a moment to check in with yourself 💜
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Mood Selection */}
-        <Card className="modern-card">
+        <Card className="doodle-card bg-gradient-to-br from-lavender/20 to-sky-blue/20">
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-primary" />
-              Current Mood
+            <CardTitle className="font-handwriting text-xl text-primary flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
+              Choose Your Mood
             </CardTitle>
           </CardHeader>
           <CardContent>
             <Select value={selectedMood} onValueChange={setSelectedMood}>
-              <SelectTrigger className="w-full h-12 bg-input border border-border">
-                <SelectValue placeholder="Select your current mood..." />
+              <SelectTrigger className="w-full h-14 border-2 border-primary/30 font-handwriting text-lg">
+                <SelectValue placeholder="Pick the mood that fits you right now..." />
               </SelectTrigger>
               <SelectContent>
                 {moods.map((mood) => (
-                  <SelectItem key={mood} value={mood} className="text-base">
+                  <SelectItem key={mood} value={mood} className="font-handwriting text-lg">
                     <div className="flex items-center gap-3">
                       <MoodEmoji mood={mood} />
                       {mood}
@@ -103,11 +103,11 @@ const AddEntry = () => {
             </Select>
             
             {selectedMood && (
-              <div className="mt-4 p-4 bg-muted rounded-lg border border-border">
-                <div className="flex items-center gap-3">
-                  <MoodEmoji mood={selectedMood} className="w-8 h-8" />
-                  <span className="text-base font-medium text-foreground">
-                    Feeling {selectedMood.toLowerCase()}
+              <div className="mt-4 p-4 bg-white rounded-xl border-2 border-primary/20">
+                <div className="flex items-center justify-center gap-3">
+                  <MoodEmoji mood={selectedMood} className="w-12 h-12" />
+                  <span className="text-2xl font-handwriting text-primary">
+                    I'm feeling {selectedMood.toLowerCase()} today
                   </span>
                 </div>
               </div>
@@ -116,57 +116,56 @@ const AddEntry = () => {
         </Card>
 
         {/* Notes Section */}
-        <Card className="modern-card">
+        <Card className="doodle-card bg-gradient-to-br from-mint/20 to-soft-yellow/20">
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
-              <Target className="w-5 h-5 text-primary" />
-              Additional Context
+            <CardTitle className="font-handwriting text-xl text-primary">
+              What's on your mind?
             </CardTitle>
-            <p className="text-muted-foreground">
-              Add any thoughts, events, or observations about your mood
+            <p className="text-muted-foreground font-handwriting">
+              Share your thoughts, experiences, or anything you'd like to remember about today
             </p>
           </CardHeader>
           <CardContent>
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="What contributed to this mood? Any specific events, thoughts, or circumstances worth noting..."
-              className="min-h-32 bg-input border border-border resize-none font-mono text-sm"
+              placeholder="Today I felt... because... I'm grateful for... I learned that..."
+              className="paper-lines min-h-40 border-2 border-primary/30 font-handwriting text-lg resize-none"
+              style={{ lineHeight: '26px', paddingTop: '12px' }}
             />
-            <p className="text-sm text-muted-foreground mt-2">
-              {notes.length} characters • Optional but recommended for tracking patterns
+            <p className="text-sm text-muted-foreground mt-2 font-handwriting">
+              {notes.length} characters • Write as much or as little as you'd like
             </p>
           </CardContent>
         </Card>
 
         {/* Submit Button */}
-        <div className="flex justify-center">
+        <div className="text-center">
           <Button
             type="submit"
             disabled={isLoading || !selectedMood}
-            className="modern-button px-8 py-3 text-base"
+            className="doodle-button bg-baby-pink hover:bg-baby-pink/80 text-foreground border-2 border-primary/30 px-8 py-4 text-xl"
           >
-            <Save className="w-5 h-5 mr-2" />
-            {isLoading ? 'Saving...' : 'Save Entry'}
+            <Save className="w-6 h-6 mr-3" />
+            {isLoading ? 'Saving your thoughts...' : 'Save My Entry'}
           </Button>
         </div>
       </form>
 
-      {/* Guidelines */}
-      <Card className="modern-card">
-        <CardHeader>
-          <CardTitle className="text-lg">Mood Tracking Guidelines</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li>• Be honest and objective about your current emotional state</li>
-            <li>• Try to track consistently for better pattern recognition</li>
-            <li>• Consider external factors that might influence your mood</li>
-            <li>• Use the notes section to capture important context</li>
-            <li>• Review your data regularly to identify trends and triggers</li>
-          </ul>
-        </CardContent>
-      </Card>
+      {/* Helpful Tips */}
+      <div className="mt-8 doodle-card bg-gradient-to-br from-baby-pink/10 to-lavender/10">
+        <h3 className="font-handwriting text-lg text-primary mb-3 flex items-center gap-2">
+          <span className="text-xl">💡</span>
+          Tips for Better Journaling
+        </h3>
+        <ul className="space-y-2 text-sm text-muted-foreground font-handwriting">
+          <li>• Be honest with yourself - there are no wrong feelings</li>
+          <li>• Try to write something every day, even if it's just one word</li>
+          <li>• Notice patterns in your moods over time</li>
+          <li>• Celebrate small wins and progress</li>
+          <li>• Remember: this is your safe space 💜</li>
+        </ul>
+      </div>
     </div>
   );
 };

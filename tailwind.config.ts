@@ -47,17 +47,12 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Modern color system
-        "slate-50": "hsl(var(--slate-50))",
-        "slate-100": "hsl(var(--slate-100))",
-        "slate-200": "hsl(var(--slate-200))",
-        "slate-300": "hsl(var(--slate-300))",
-        "slate-400": "hsl(var(--slate-400))",
-        "slate-500": "hsl(var(--slate-500))",
-        "slate-600": "hsl(var(--slate-600))",
-        "slate-700": "hsl(var(--slate-700))",
-        "slate-800": "hsl(var(--slate-800))",
-        "slate-900": "hsl(var(--slate-900))",
+        // Mood Journal Pastel Colors
+        "soft-yellow": "hsl(var(--soft-yellow))",
+        "mint": "hsl(var(--mint))",
+        "baby-pink": "hsl(var(--baby-pink))",
+        "lavender": "hsl(var(--lavender))",
+        "sky-blue": "hsl(var(--sky-blue))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -70,8 +65,8 @@ export default {
         },
       },
       fontFamily: {
-        'mono': ['JetBrains Mono', 'Fira Code', 'monospace'],
-        'sans': ['Space Grotesk', 'system-ui', 'sans-serif'],
+        'handwriting': ['Patrick Hand', 'Indie Flower', 'cursive'],
+        'body': ['Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
